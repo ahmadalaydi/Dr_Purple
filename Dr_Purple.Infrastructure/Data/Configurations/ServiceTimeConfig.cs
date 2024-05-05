@@ -1,5 +1,6 @@
 ﻿using Dr_Purple.Domain.Entities.Appointments;
 using Dr_Purple.Domain.Entities.Services;
+using Dr_Purple.Domain.Entities.Services.State;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 internal sealed class ServiceTimeConfig : IEntityTypeConfiguration<ServiceTime>
@@ -8,22 +9,40 @@ internal sealed class ServiceTimeConfig : IEntityTypeConfiguration<ServiceTime>
     {
         builder.HasKey(_ => _.Id);
 
-        builder.Property(_ => _.ServiceId).IsRequired();
-        builder.Property(_ => _.StartTime).IsRequired()
-               .HasConversion(v => v.ToTimeSpan(),
-                              v => TimeOnly.FromTimeSpan(v));
+        builder.Property(_ => _.StartTime).IsRequired();
+        builder.Property(_ => _.Date).IsRequired()
+               .HasConversion(v => v.ToDateTime(default),
+                              v => DateOnly.FromDateTime(v));
 
-        builder.Property(_ => _.EndTime).IsRequired()
-               .HasConversion(v => v.ToTimeSpan(),
-                              v => TimeOnly.FromTimeSpan(v));
-
+        builder.Property(_ => _.EndTime).IsRequired();
 
         builder.HasOne(_ => _.Service)
-                .WithMany(_ => _.ServiceTimes)
-                .HasForeignKey(_ => _.ServiceId);
+               .WithMany(_ => _.ServiceTimes)
+               .HasForeignKey(_ => _.ServiceId);
 
-        builder.HasOne(_ => _.AppointmentServiceTime)
-                .WithOne(_ => _.ServiceTime)
-                .HasForeignKey<AppointmentServiceTime>(_ => _.ServiceTimeId);
+
+        builder.HasOne(_ => _.ContractService)
+               .WithMany(_ => _.ServiceTimes)
+               .HasForeignKey(_ => _.ContractServiceId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasOne(_ => _.Appointment)
+               .WithOne(_ => _.ServiceTime)
+               .HasForeignKey<Appointment>(_ => _.ServiceTimeId);
+
+        builder.Property(_ => _.State)
+               .HasConversion(_ => _.GetType().Name,
+               _ => GetServiceTimeState(_));
     }
+
+    private static IServiceTimeState GetServiceTimeState(string state)
+        => state switch
+        {
+            nameof(BookedServiceTimeState) => new BookedServiceTimeState(),
+            nameof(CanceledServiceTimeState) => new CanceledServiceTimeState(),
+            nameof(DoneServiceTimeState) => new DoneServiceTimeState(),
+            nameof(FreeServiceTimeState) => new FreeServiceTimeState(),
+            nameof(LeavedServiceTimeState) => new LeavedServiceTimeState(),
+            _ => throw new NotImplementedException(),
+        };
 }

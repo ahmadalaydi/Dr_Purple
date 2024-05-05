@@ -1,4 +1,4 @@
-﻿using Dr_Purple.Domain.Entities.Leaves;
+﻿using Dr_Purple.Domain.Entities.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 internal sealed class LeaveBalanceConfig : IEntityTypeConfiguration<LeaveBalance>
@@ -13,7 +13,7 @@ internal sealed class LeaveBalanceConfig : IEntityTypeConfiguration<LeaveBalance
                .HasConversion(v => v.ToDateTime(default),
                               v => DateOnly.FromDateTime(v));
 
-        builder.Property(_ => _.EndtDate).IsRequired()
+        builder.Property(_ => _.EndDate).IsRequired()
                .HasConversion(v => v.ToDateTime(default),
                               v => DateOnly.FromDateTime(v));
 

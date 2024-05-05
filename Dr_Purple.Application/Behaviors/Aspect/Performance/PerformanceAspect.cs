@@ -15,8 +15,8 @@ public class PerformanceAspect : MethodInterseption
     protected override void OnAfter(IInvocation? invocation)
     {
         if (_stopwatch!.Elapsed.TotalSeconds > _interval)
-            Debug.WriteLine($"Performance : {invocation!.Method.DeclaringType!.FullName }" +
-                $".{invocation.Method.Name } --> {_stopwatch.Elapsed.TotalSeconds}");
+            Debug.WriteLine($"Performance : {invocation!.Method.DeclaringType!.FullName}" +
+                $".{invocation.Method.Name} --> {_stopwatch.Elapsed.TotalSeconds}");
 
         _stopwatch.Reset();
     }

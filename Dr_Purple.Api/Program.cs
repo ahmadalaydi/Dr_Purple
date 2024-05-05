@@ -1,24 +1,22 @@
 using Dr_Purple.Api;
 using Dr_Purple.Application;
-using Dr_Purple.Infrastructure;
+using Dr_Purple.Application.Constants.Notification;
 using Microsoft.OpenApi.Models;
-using Ocelot.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CORSPolicy",
-        builder => builder.AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .AllowCredentials()
-                          .SetIsOriginAllowed((hosts) => true));
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(builder =>
+//    {
+//        builder.SetIsOriginAllowed(isOriginAllowed: _ => true).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+//    });
+//});
 
 builder.Services
-        .AddInfrastructure(builder.Configuration)
         .AddApi()
         .AddApplication(builder.Configuration)
+        
         .AddSwaggerGen(c =>
         {
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -47,9 +45,6 @@ builder.Services
         })
         .AddEndpointsApiExplorer();
 
-builder.Configuration.AddJsonFile("Ocelot.json", optional: false, reloadOnChange: true);
-builder.Services.AddOcelot(builder.Configuration);
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -58,10 +53,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseCors(_ => _
+            .SetIsOriginAllowed(_ => true)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
+
+//app.UseMiddleware<ExceptionMiddleware>();
 
 app.Run();

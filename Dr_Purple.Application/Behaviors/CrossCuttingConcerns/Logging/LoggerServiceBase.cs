@@ -6,10 +6,10 @@ using System.Xml;
 namespace Dr_Purple.Application.Behaviors.CrossCuttingConcerns.Logging;
 public class LoggerServiceBase
 {
-    private ILog _log;
+    private readonly ILog _log;
     public LoggerServiceBase(string name)
     {
-        XmlDocument xmlDocument = new XmlDocument();
+        XmlDocument xmlDocument = new();
         xmlDocument.Load(File.OpenRead("log4net.config"));
 
         ILoggerRepository loggerRepository = LogManager.CreateRepository(Assembly.GetEntryAssembly()

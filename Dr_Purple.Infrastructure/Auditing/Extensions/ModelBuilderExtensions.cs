@@ -1,4 +1,4 @@
-﻿using Dr_Purple.Infrastructure.Auditing.Models;
+﻿using Dr_Purple.Domain.Entities.Auditing;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dr_Purple.Infrastructure.Auditing.Extensions;

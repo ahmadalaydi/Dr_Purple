@@ -1,16 +1,12 @@
-using Dr_Purple.Application.Mapper.Response;
 using Dr_Purple.Application.Utility.Results;
-using Dr_Purple.Domain.Enums;
 using MediatR;
 
 namespace Dr_Purple.Application.Services.ContractServices.Commands;
 
 public record CreateContractCommand(
-    string? FirstName,
-    string? LastName,
-    string? UserName,
-    string? Password,
-    string? ContactNumber,
-    long? AddressId,
-    Role? Role,
-    Gender? Gender) : IRequest<IDataResult<ContractResponse>>;
+     long UserId,
+     long DepartmentId,
+     long JobTitleId,
+     float Salary,
+     DateOnly StartDate,
+     DateOnly EndDate) : IRequest<IResult>;

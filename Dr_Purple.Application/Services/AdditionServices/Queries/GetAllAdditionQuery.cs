@@ -1,8 +1,7 @@
-using Dr_Purple.Application.Mapper.Response;
+using Dr_Purple.Application.Utility.Paging;
 using Dr_Purple.Application.Utility.Results;
 using MediatR;
 
 namespace Dr_Purple.Application.Services.AdditionServices.Queries;
 
-public record GetAllAdditionQuery(string UserName, string Password)
-    : IRequest<IDataResult<AdditionResponse>>;
+public record GetAllAdditionQuery(QueryOptions Options) : IRequest<IResult>;

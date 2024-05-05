@@ -7,11 +7,9 @@ public class ErrorDetails
     public int? StatusCode { get; set; }
     public string? MessageId { get; set; }
     public override string ToString()
+    => JsonSerializer.Serialize(this, new JsonSerializerOptions()
     {
-        return JsonSerializer.Serialize(this, new JsonSerializerOptions()
-        {
-            DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        });
-    }
+        DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    });
 }

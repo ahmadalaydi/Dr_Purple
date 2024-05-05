@@ -6,6 +6,7 @@ internal sealed class ServiceConfig : IEntityTypeConfiguration<Service>
     public void Configure(EntityTypeBuilder<Service> builder)
     {
         builder.HasKey(_ => _.Id);
+        builder.HasIndex(_ => _.Name).IsUnique();
 
         builder.Property(_ => _.Id).IsRequired();
         builder.Property(_ => _.SubDepartmentId).IsRequired();
@@ -20,9 +21,6 @@ internal sealed class ServiceConfig : IEntityTypeConfiguration<Service>
                 .WithOne(_ => _.Service);
 
         builder.HasMany(_ => _.ServiceTimes)
-                .WithOne(_ => _.Service);
-
-        builder.HasMany(_ => _.ServiceCostPrices)
                 .WithOne(_ => _.Service);
     }
 }

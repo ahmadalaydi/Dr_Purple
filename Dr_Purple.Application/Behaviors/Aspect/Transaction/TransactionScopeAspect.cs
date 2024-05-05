@@ -7,13 +7,13 @@ public class TransactionScopeAspect : MethodInterseption
 {
     public override void Intercept(IInvocation invocation)
     {
-        using TransactionScope transactionScope = new TransactionScope(TransactionScopeOption.Required, TimeSpan.FromMinutes(10));
+        using TransactionScope transactionScope = new(TransactionScopeOption.Required, TimeSpan.FromMinutes(10));
         try
         {
             invocation.Proceed();
             transactionScope.Complete();
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             transactionScope.Dispose();
             throw;

@@ -1,4 +1,4 @@
-﻿using Dr_Purple.Infrastructure.Auditing.Attributes;
+﻿using Dr_Purple.Domain.Attributes;
 
 namespace Dr_Purple.Infrastructure.Auditing;
 internal static class AuditUtilities
@@ -24,7 +24,7 @@ internal static class AuditUtilities
         if (propertyName == "Discriminator") //set Discriminator shadow property as non auditable
             return false;
 
-        var customAttributes = type.GetProperty(propertyName).GetCustomAttributes(false);
+        var customAttributes = type.GetProperty(propertyName)!.GetCustomAttributes(false);
 
         foreach (var customAttribute in customAttributes)
         {

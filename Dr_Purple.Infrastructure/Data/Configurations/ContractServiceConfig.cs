@@ -9,15 +9,21 @@ internal sealed class ContractServiceConfig : IEntityTypeConfiguration<ContractS
     {
         builder.HasKey(_ => _.Id);
 
+        builder.Property(_ => _.StartTime).IsRequired();
+        builder.Property(_ => _.EndTime).IsRequired();
+
         builder.HasOne(_ => _.Contract)
                 .WithMany(_ => _.ContractServices)
                 .HasForeignKey(_ => _.ContractId);
 
         builder.HasOne(_ => _.Service)
                 .WithMany(_ => _.ContractServices)
-                .HasForeignKey(_ => _.ServiceId);
+                .HasForeignKey(_ => _.ServiceId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasMany(_ => _.ContractTimes)
-                .WithOne(_ => _.ContractService);
+        builder.HasMany(_ => _.ServiceTimes)
+                .WithOne(_ => _.ContractService)
+                .HasForeignKey(_ => _.ContractServiceId)
+                .OnDelete(DeleteBehavior.NoAction);
     }
 }

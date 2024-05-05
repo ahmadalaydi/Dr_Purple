@@ -8,15 +8,22 @@
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="5.1.1" />
-    <PackageReference Include="FluentValidation" Version="11.4.0" />
+    <PackageReference Include="FirebaseAdmin" Version="2.3.0" />
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
     <PackageReference Include="log4net" Version="2.0.15" />
-    <PackageReference Include="Mapster" Version="7.3.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.13" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="7.3.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Dr_Purple.Domain\Dr_Purple.Domain.csproj" />
+    <ProjectReference Include="..\Dr_Purple.Infrastructure\Dr_Purple.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Notifications\AppointmentNotifications\Handlers\Queries\" />
+    <Folder Include="Notifications\AppointmentNotifications\Queries\" />
   </ItemGroup>
 
 </Project>

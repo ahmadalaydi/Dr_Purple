@@ -1,16 +1,9 @@
-using Dr_Purple.Application.Mapper.Response;
 using Dr_Purple.Application.Utility.Results;
-using Dr_Purple.Domain.Enums;
 using MediatR;
 
 namespace Dr_Purple.Application.Services.ServiceServices.Commands;
 
-public record UpdateServiceCommand(
-    string? FirstName,
-    string? LastName,
-    string? UserName,
-    string? Password,
-    string? ContactNumber,
-    long? AddressId,
-    Role? Role,
-    Gender? Gender) : IRequest<IDataResult<ServiceResponse>>;
+public record UpdateServiceCommand(long SubDepartmentId, string Name, float Price, string Duration, string Description) : IRequest<IResult>
+{
+    public long Id { get; init; }
+}

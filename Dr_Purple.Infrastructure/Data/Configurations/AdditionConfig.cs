@@ -1,4 +1,4 @@
-﻿using Dr_Purple.Domain.Entities.Additions;
+﻿using Dr_Purple.Domain.Entities.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

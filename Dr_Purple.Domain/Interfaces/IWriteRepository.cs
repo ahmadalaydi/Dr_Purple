@@ -1,5 +1,5 @@
 ﻿namespace Dr_Purple.Domain.Interfaces;
-public interface IWriteRepository<T> where T :class, IEntity
+public interface IWriteRepository<T> where T : class, IEntity
 {
     Task<T> AddAsync(T entity);
     Task AddRangeAsync(IEnumerable<T> entities);
